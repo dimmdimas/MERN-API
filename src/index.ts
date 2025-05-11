@@ -11,6 +11,12 @@ async function init() {
 
     app.use('/api', router)
 
+    app.get('/', (req, res)=> {
+        res.status(200).json({
+            massage: 'Server is running'
+        })
+    })
+
     const db = await connect()
 
     app.listen(env.PORT, () => {
