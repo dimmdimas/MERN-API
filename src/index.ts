@@ -3,10 +3,14 @@ import express from "express"
 import env from "./utils/env";
 import router from "./router/api";
 import connect from "./utils/database";
+import docs from "./docs/route";
+import cors from 'cors'
+
 
 async function init() {
     const app = express();
 
+    app.use(cors());
     app.use(bodyParser.json())
 
     app.use('/api', router)
@@ -16,6 +20,8 @@ async function init() {
             massage: 'Server is running'
         })
     })
+
+    docs(app)
 
     const db = await connect()
 

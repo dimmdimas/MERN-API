@@ -4,6 +4,7 @@ import usersModels from "../models/users.models";
 import { encription } from "../utils/encryption";
 import { getToken } from "../utils/jwt";
 import { IReq } from "../middleware/auth.middleware";
+import { log } from "console";
 
 export type TRegister = {
     fullName: string,
@@ -48,6 +49,13 @@ export default {
 
     },
     Login: async (req: Request, res: Response) => {
+        /**
+        #swagger.requestBody = {
+            required: true, 
+            schema: {$ref: "#/components/schemas/LoginRequest"}
+        }
+         */
+
         try {
             const { identifier, password } = req.body as TLogin;
 
@@ -103,15 +111,29 @@ export default {
         }
     },
     Me: async (req: IReq, res: Response) => {
+        /* #swagger.security = [{
+            "bearerAuth": []
+    }] */
         try {
             const user = req.user
 
-            const result = await usersModels.findById(user?.id)
+            if (user) {
+                const result = await usersModels.findById(user.id)
 
-            res.status(200).json({
-                massage: 'Welcome',
-                data: result
-            })
+                console.log(user.id);
+                
+                res.status(200).json({
+                    massage: 'Welcome',
+                    data: result
+                })
+            }
+
+            if (!user) {
+                res.status(403).json({
+                    massage: 'unauthorized',
+                    data: null
+                });
+            }
         } catch (error) {
             const err = error as Error
 
@@ -119,5 +141,15 @@ export default {
                 massage: err.message
             })
         }
+    },
+
+    TesID: async (req: Request, res: Response) => {
+        const idUser = '681f52ec6d1b0b370804bb43';
+
+        const user = await usersModels.findById(idUser);
+
+        res.status(200).json({
+            data: user
+        })
     }
 }

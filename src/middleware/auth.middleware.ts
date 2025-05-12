@@ -1,6 +1,5 @@
 import { NextFunction, Request, Response } from "express";
 import { getUserData, IToken } from "../utils/jwt";
-import { RootQuerySelector } from "mongoose";
 
 export interface IReq extends Request {
     user?: IToken
@@ -9,7 +8,7 @@ export interface IReq extends Request {
 export default (req: Request, res: Response, next: NextFunction) => {
     try {
         const auth = req.headers.authorization?.replace('Bearer ', '');
-
+        
         if (!auth) {
             res.status(403).json({
                 massage: 'unauthorized',
@@ -19,18 +18,20 @@ export default (req: Request, res: Response, next: NextFunction) => {
 
         if (auth) {
             const user = getUserData(auth)
-
+            console.log(user);
+            
             if (!user) {
                 res.status(403).json({
                     massage: 'unauthorized',
                     data: null
                 });
-
-                (req as IReq).user = user
-
-                next()
             }
+
+            (req as IReq).user = user
+            next();
         };
+
+       
 
     } catch (error) {
         const err = error as Error
@@ -40,6 +41,5 @@ export default (req: Request, res: Response, next: NextFunction) => {
             data: null
         })
     }
-
 
 }
