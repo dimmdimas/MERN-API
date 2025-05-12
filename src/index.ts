@@ -3,8 +3,8 @@ import express from "express"
 import env from "./utils/env";
 import router from "./router/api";
 import connect from "./utils/database";
-import docs from "./docs/route";
 import cors from 'cors'
+import docs from "./docs/route";
 
 
 async function init() {
@@ -21,7 +21,7 @@ async function init() {
         })
     })
 
-    docs(app)
+    docs(app);
 
     const db = await connect()
 
