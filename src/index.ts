@@ -21,7 +21,7 @@ async function init() {
         })
     })
 
-    // docs(app);
+    docs(app);
 
     const db = await connect()
 
