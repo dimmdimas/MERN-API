@@ -18,7 +18,6 @@ export default (req: Request, res: Response, next: NextFunction) => {
 
         if (auth) {
             const user = getUserData(auth)
-            console.log(user);
             
             if (!user) {
                 res.status(403).json({
@@ -30,8 +29,6 @@ export default (req: Request, res: Response, next: NextFunction) => {
             (req as IReq).user = user
             next();
         };
-
-       
 
     } catch (error) {
         const err = error as Error

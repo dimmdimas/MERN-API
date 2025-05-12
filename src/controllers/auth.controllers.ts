@@ -119,8 +119,6 @@ export default {
 
             if (user) {
                 const result = await usersModels.findById(user.id)
-
-                console.log(user.id);
                 
                 res.status(200).json({
                     massage: 'Welcome',
@@ -141,15 +139,5 @@ export default {
                 massage: err.message
             })
         }
-    },
-
-    TesID: async (req: Request, res: Response) => {
-        const idUser = '681f52ec6d1b0b370804bb43';
-
-        const user = await usersModels.findById(idUser);
-
-        res.status(200).json({
-            data: user
-        })
     }
 }
