@@ -49,6 +49,8 @@
             color: #ffffff;
             text-decoration: none;
             border-radius: 5px;
+            border: 1px solid #4caf50;
+            background-color: #4caf50;
         }
 
         @media (max-width: 600px) {
@@ -76,17 +78,17 @@
 
             <ul>
                 <li><strong>Name: </strong>
-                    <%= fullName %>>
+                    <%= fullName %>
                 </li>
                 <li><strong>Email: </strong>
-                    <%= email%>>
+                    <%= email%>
                 </li>
                 <li><strong>Tanggal Pendaftaran: </strong>
-                    <%= createdAt %>>
+                    <%= createdAt %>
                 </li>
 
                 <p>Untuk memulai silakan klik tombol Berikut: </p>
-                <a href="<% activationLink %>" class="button">Aktifkan akun</a>
+                <a href="<%= activationLink %>" class="button">Aktifkan akun</a>
 
                 <p>
                     Jika anda mengalami kendala, hubungi kami

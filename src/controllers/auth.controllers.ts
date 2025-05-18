@@ -29,6 +29,13 @@ const registerValidate = yup.object({
 
 export default {
     Register: async (req: Request, res: Response) => {
+        /**
+         #swagger.tags = ['Auth']
+         #swagger.requestBody = {
+         required: true,
+         schema: {$ref: '#/components/schemas/RegisterRequest'}
+         }
+         */
         try {
             const { fullName, username, email, password, confirmPassword } = req.body as TRegister
 
@@ -50,6 +57,7 @@ export default {
     },
     Login: async (req: Request, res: Response) => {
         /**
+        #swagger.tags = ['Auth']
         #swagger.requestBody = {
             required: true, 
             schema: {$ref: "#/components/schemas/LoginRequest"}
@@ -79,7 +87,8 @@ export default {
                     {
                         password: pass
                     }
-                ]
+                ],
+                isActived: true
             })
 
             if (user) {
@@ -111,7 +120,9 @@ export default {
         }
     },
     Me: async (req: IReq, res: Response) => {
-        /* #swagger.security = [{
+        /** 
+        #swagger.tags = ['Auth']
+        #swagger.security = [{
             "bearerAuth": []
     }] */
         try {
@@ -137,6 +148,38 @@ export default {
 
             res.status(400).json({
                 massage: err.message
+            })
+        }
+    },
+    Activation: async (req: Request, res: Response) => {
+        /**
+         #swagger.tags = ['Auth']
+         #swagger.requestBody = {
+         required: true,
+         schema: {$ref: '#/components/schemas/ActivationRequest'}
+         }
+         */
+        try {
+            const {code} = req.body as {code: string};
+
+            const user = await usersModels.findOneAndUpdate({
+                codeActivation: code
+            }, {
+                isActived: true
+            }, {
+                new: true
+            })
+
+            res.status(200).json({
+                massage: 'user succes actived',
+                data: user
+            });
+        } catch (error) {
+            const err = error as Error
+
+            res.status(400).json({
+                massage: err.message,
+                data: null
             })
         }
     }

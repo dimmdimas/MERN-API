@@ -28,9 +28,19 @@ const doc = {
         },
 
         schemas: {
+            RegisterRequest: {
+              fullName: 'TOMAT',
+              username: "Tomat-Admin",
+              email: 'tomat-admin@yopmail.com',
+              password: 'Tomat123123',
+              confirmPassword: 'Tomat123123'
+            },
             LoginRequest: {
-                identifier: "TOMATO",
-                password: "abcabc123"
+                identifier: "Tomat-Admin",
+                password: "Tomat123123"
+            },
+            ActivationRequest: {
+                code: 'abc'
             }
         }
     }

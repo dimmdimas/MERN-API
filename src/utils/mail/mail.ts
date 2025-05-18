@@ -31,10 +31,10 @@ export const sendEmail = async ({...mailParams}: ISendMail)=> {
     return result;
 }
 
-export const renderMailHTML = async (template: string, data: any)=> {
-    const content = await ejs.renderFile(path.join(__dirname, `templates/${template}`))
+export const renderMailHTML = async (template: string, data: any):Promise<string> => {
+    const content = await ejs.renderFile(path.join(__dirname, `templates/${template}`), data)
 
-    return content;
+    return content as string;
 };
 
 
